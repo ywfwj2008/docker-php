@@ -92,7 +92,3 @@ if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.
 zend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.5.so
 EOF
 fi
-
-# white default index.html
-echo "Hello World!" > /home/wwwroot/default/index.html
-echo "<?php phpinfo();" > /home/wwwroot/default/phpinfo.php

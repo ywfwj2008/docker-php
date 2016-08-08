@@ -114,8 +114,6 @@ RUN curl -sS https://getcomposer.org/installer | $PHP_INSTALL_DIR/bin/php && \
     mv composer.phar /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer
 
-WORKDIR /home/wwwroot
-
 # expose port
 EXPOSE 80 443
 
