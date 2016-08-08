@@ -3,12 +3,12 @@ MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV PHP_INSTALL_DIR=/usr/local/php \
     RUN_USER=www \
-    PHP_VERSION=7.0.8 \
+    PHP_VERSION=7.0.9 \
     IMAGICK_PECL_VERSION=3.4.3RC1 \
     MEMCACHE_PECL_VERSION=3.0.8 \
     LIBMEMCACHED_VERSION=1.0.18 \
     MEMCACHED_PECL_VERSION=2.2.0 \
-    REDIS_PECL_VERSION=2.2.8 \
+    REDIS_PECL_VERSION=3.0.0 \
     SWOOLE_VERSION=1.8.7
 
 RUN apt-get update && apt-get upgrade -y && \
