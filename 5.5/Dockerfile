@@ -14,6 +14,7 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y ca-certificates wget gcc g++ make cmake autoconf patch pkg-config sendmail openssl libxslt-dev libicu-dev libssl-dev curl libcurl4-openssl-dev libxml2 libxml2-dev libjpeg-dev libpng12-dev libpng3 libfreetype6 libfreetype6-dev libsasl2-dev  && \
     rm -rf /var/lib/apt/lists/*
+RUN useradd -M -s /sbin/nologin $RUN_USER
 
 WORKDIR /tmp
 
