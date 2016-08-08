@@ -117,7 +117,7 @@ RUN curl -sS https://getcomposer.org/installer | $PHP_INSTALL_DIR/bin/php && \
     chmod a+x /usr/local/bin/composer
 
 # expose port
-EXPOSE 80 443
+EXPOSE 9000
 
 # Set the entrypoint script.
 ADD ./entrypoint.sh /entrypoint.sh
