@@ -3,13 +3,13 @@ MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV PHP_INSTALL_DIR=/usr/local/php \
     RUN_USER=www \
-    PHP_VERSION=5.6.28 \
+    PHP_VERSION=7.0.11 \
     IMAGICK_PECL_VERSION=3.4.3RC1 \
     MEMCACHE_PECL_VERSION=3.0.8 \
     LIBMEMCACHED_VERSION=1.0.18 \
     MEMCACHED_PECL_VERSION=2.2.0 \
-    REDIS_PECL_VERSION=2.2.8 \
-    SWOOLE_VERSION=1.9.0
+    REDIS_PECL_VERSION=3.0.0 \
+    SWOOLE_VERSION=1.8.12
 
 RUN apt-get update && apt-get upgrade -yqq && \
     apt-get install -y ca-certificates wget gcc g++ make cmake autoconf patch pkg-config sendmail openssl libxslt-dev libicu-dev libssl-dev curl libcurl4-openssl-dev libxml2 libxml2-dev libjpeg-dev libpng12-dev libpng3 libfreetype6 libfreetype6-dev libsasl2-dev  && \
@@ -27,7 +27,7 @@ RUN wget -c --no-check-certificate http://www.php.net/distributions/php-$PHP_VER
     --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd \
     --with-iconv-dir=/usr/local --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib \
     --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-exif \
-    --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local --enable-mbregex \
+    --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex \
     --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl \
     --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-ftp --enable-intl --with-xsl \
     --with-gettext --enable-zip --enable-soap --disable-ipv6 --disable-debug && \
@@ -95,8 +95,8 @@ RUN wget -c --no-check-certificate http://pecl.php.net/get/redis-$REDIS_PECL_VER
     rm -rf /tmp/*
 
 # install swoole
-RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/v$SWOOLE_VERSION-stable.tar.gz && \
-    tar xzf v$SWOOLE_VERSION-stable.tar.gz && \
+RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/$SWOOLE_VERSION-stable.tar.gz && \
+    tar xzf $SWOOLE_VERSION-stable.tar.gz && \
     cd swoole-src-$SWOOLE_VERSION-stable && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --enable-async-mysql --enable-jemalloc && \
