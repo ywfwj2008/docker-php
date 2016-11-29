@@ -1,4 +1,4 @@
-FROM ywfwj2008/debian:latest
+FROM ywfwj2008/docker-dependent:latest
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV PHP_INSTALL_DIR=/usr/local/php \
@@ -101,7 +101,7 @@ RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/
     tar xzf v$SWOOLE_VERSION-stable.tar.gz && \
     cd swoole-src-$SWOOLE_VERSION-stable && \
     $PHP_INSTALL_DIR/bin/phpize && \
-    ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --enable-async-mysql --enable-jemalloc && \
+    ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --enable-jemalloc && \
     make && make install && \
     rm -rf /tmp/*
 
@@ -116,10 +116,8 @@ RUN curl -sS https://getcomposer.org/installer | $PHP_INSTALL_DIR/bin/php && \
     mv composer.phar /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer
 
-WORKDIR /home/wwwroot
-
 # expose port
-EXPOSE 80 443
+EXPOSE 9000
 
 # Set the entrypoint script.
 ADD ./entrypoint.sh /entrypoint.sh
@@ -127,4 +125,4 @@ RUN chmod 777 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Define the default command.
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["bash"]
