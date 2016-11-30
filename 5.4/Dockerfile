@@ -8,7 +8,8 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
     LIBMEMCACHED_VERSION=1.0.18 \
     MEMCACHED_PECL_VERSION=2.2.0 \
     REDIS_PECL_VERSION=2.2.8 \
-    SWOOLE_VERSION=1.9.0
+    SWOOLE_VERSION=1.9.0 \
+    REMOTE_PATH=https://github.com/ywfwj2008/docker-php/raw/master
 
 RUN apt-get update && apt-get upgrade -yqq && \
     rm -rf /var/lib/apt/lists/*
@@ -20,7 +21,7 @@ RUN wget -c --no-check-certificate http://www.php.net/distributions/php-$PHP_VER
     tar xzf php-$PHP_VERSION.tar.gz && \
     wget -c --no-check-certificate http://mirrors.linuxeye.com/oneinstack/src/fpm-race-condition.patch && \
     patch -d php-$PHP_VERSION -p0 < fpm-race-condition.patch && \
-    pushd php-$PHP_VERSION && \
+    cd php-$PHP_VERSION && \
     ./configure --prefix=$PHP_INSTALL_DIR --with-config-file-path=$PHP_INSTALL_DIR/etc \
     --with-config-file-scan-dir=$PHP_INSTALL_DIR/etc/php.d \
     --with-fpm-user=$RUN_USER --with-fpm-group=$RUN_USER --enable-fpm \
@@ -42,18 +43,18 @@ RUN wget -c --no-check-certificate http://www.php.net/distributions/php-$PHP_VER
     rm -rf /tmp/*
 
 # add php-fpm.conf
-ADD php-fpm.conf $PHP_INSTALL_DIR/etc/php-fpm.conf
+ADD $REMOTE_PATH/php-fpm.conf $PHP_INSTALL_DIR/etc/php-fpm.conf
 
 # install ImageMagick
 RUN wget -c --no-check-certificate http://www.imagemagick.org/download/ImageMagick.tar.gz && \
     tar xzf ImageMagick.tar.gz && \
-    pushd ImageMagick* && \
+    cd ImageMagick* && \
     ./configure --prefix=/usr/local/imagemagick --enable-shared --enable-static && \
     make && make install && \
-    pushd .. && \
+    cd .. && \
     wget -c --no-check-certificate http://pecl.php.net/get/imagick-$IMAGICK_PECL_VERSION.tgz && \
     tar xzf imagick-$IMAGICK_PECL_VERSION.tgz && \
-    pushd imagick-$IMAGICK_PECL_VERSION && \
+    cd imagick-$IMAGICK_PECL_VERSION && \
     export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --with-imagick=/usr/local/imagemagick && \
@@ -64,7 +65,7 @@ RUN wget -c --no-check-certificate http://www.imagemagick.org/download/ImageMagi
 # install php-memcache
 RUN wget -c --no-check-certificate http://pecl.php.net/get/memcache-$MEMCACHE_PECL_VERSION.tgz && \
     tar xzf memcache-$MEMCACHE_PECL_VERSION.tgz && \
-    pushd memcache-$MEMCACHE_PECL_VERSION && \
+    cd memcache-$MEMCACHE_PECL_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
@@ -74,14 +75,14 @@ RUN wget -c --no-check-certificate http://pecl.php.net/get/memcache-$MEMCACHE_PE
 # install php-memcached
 RUN wget -c --no-check-certificate https://launchpad.net/libmemcached/1.0/$LIBMEMCACHED_VERSION/+download/libmemcached-$LIBMEMCACHED_VERSION.tar.gz && \
     tar xzf libmemcached-$LIBMEMCACHED_VERSION.tar.gz && \
-    pushd libmemcached-$LIBMEMCACHED_VERSION && \
+    cd libmemcached-$LIBMEMCACHED_VERSION && \
     sed -i "s@lthread -pthread -pthreads@lthread -lpthread -pthreads@" ./configure && \
     ./configure && \
     make && make install && \
-    pushd .. && \
+    cd .. && \
     wget -c --no-check-certificate http://pecl.php.net/get/memcached-$MEMCACHED_PECL_VERSION.tgz && \
     tar xzf memcached-$MEMCACHED_PECL_VERSION.tgz && \
-    pushd memcached-$MEMCACHED_PECL_VERSION && \
+    cd memcached-$MEMCACHED_PECL_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
@@ -91,7 +92,7 @@ RUN wget -c --no-check-certificate https://launchpad.net/libmemcached/1.0/$LIBME
 # install php-redis
 RUN wget -c --no-check-certificate http://pecl.php.net/get/redis-$REDIS_PECL_VERSION.tgz && \
     tar xzf redis-$REDIS_PECL_VERSION.tgz && \
-    pushd redis-$REDIS_PECL_VERSION && \
+    cd redis-$REDIS_PECL_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
@@ -101,7 +102,7 @@ RUN wget -c --no-check-certificate http://pecl.php.net/get/redis-$REDIS_PECL_VER
 # install swoole
 RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/v$SWOOLE_VERSION-stable.tar.gz && \
     tar xzf v$SWOOLE_VERSION-stable.tar.gz && \
-    pushd swoole-src-$SWOOLE_VERSION-stable && \
+    cd swoole-src-$SWOOLE_VERSION-stable && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --enable-jemalloc && \
     make && make install && \
@@ -120,7 +121,7 @@ RUN curl -sS https://getcomposer.org/installer | $PHP_INSTALL_DIR/bin/php && \
     chmod a+x /usr/local/bin/composer
 
 # Set the entrypoint script.
-ADD ./entrypoint.sh /entrypoint.sh
+ADD $REMOTE_PATH/entrypoint.sh /entrypoint.sh
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
