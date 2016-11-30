@@ -1,8 +1,7 @@
-FROM ywfwj2008/debian:latest
+FROM ywfwj2008/docker-dependent:latest
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV PHP_INSTALL_DIR=/usr/local/php \
-    RUN_USER=www \
     PHP_VERSION=5.6.28 \
     IMAGICK_PECL_VERSION=3.4.3RC1 \
     MEMCACHE_PECL_VERSION=3.0.8 \
@@ -12,7 +11,6 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
     SWOOLE_VERSION=1.9.0
 
 RUN apt-get update && apt-get upgrade -yqq && \
-    apt-get install -y ca-certificates wget gcc g++ make cmake autoconf patch pkg-config sendmail openssl libxslt-dev libicu-dev libssl-dev curl libcurl4-openssl-dev libxml2 libxml2-dev libjpeg-dev libpng12-dev libpng3 libfreetype6 libfreetype6-dev libsasl2-dev  && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
@@ -114,10 +112,8 @@ RUN curl -sS https://getcomposer.org/installer | $PHP_INSTALL_DIR/bin/php && \
     mv composer.phar /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer
 
-WORKDIR /home/wwwroot
-
 # expose port
-EXPOSE 80 443
+EXPOSE 9000
 
 # Set the entrypoint script.
 ADD ./entrypoint.sh /entrypoint.sh
@@ -125,4 +121,4 @@ RUN chmod 777 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Define the default command.
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["bash"]

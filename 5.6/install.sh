@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # optimize php.ini
+PHP_INSTALL_DIR=/usr/local/php
 sed -i "s@^memory_limit.*@memory_limit = 192M@" $PHP_INSTALL_DIR/etc/php.ini
 sed -i 's@^output_buffering =@output_buffering = On\noutput_buffering =@' $PHP_INSTALL_DIR/etc/php.ini
 sed -i 's@^;cgi.fix_pathinfo.*@cgi.fix_pathinfo=0@' $PHP_INSTALL_DIR/etc/php.ini
@@ -92,6 +93,3 @@ if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.
 zend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.6.so
 EOF
 fi
-
-# write phpinfo.php
-echo "<?php phpinfo();" > /home/wwwroot/default/phpinfo.php
