@@ -1,4 +1,4 @@
-FROM ywfwj2008/docker-dependent:latest
+FROM ywfwj2008/dependent:latest
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV PHP_INSTALL_DIR=/usr/local/php \
