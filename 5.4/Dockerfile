@@ -20,7 +20,7 @@ RUN wget -c --no-check-certificate http://www.php.net/distributions/php-$PHP_VER
     tar xzf php-$PHP_VERSION.tar.gz && \
     wget -c --no-check-certificate http://mirrors.linuxeye.com/oneinstack/src/fpm-race-condition.patch && \
     patch -d php-$PHP_VERSION -p0 < fpm-race-condition.patch && \
-    cd php-$PHP_VERSION && \
+    pushd php-$PHP_VERSION && \
     ./configure --prefix=$PHP_INSTALL_DIR --with-config-file-path=$PHP_INSTALL_DIR/etc \
     --with-config-file-scan-dir=$PHP_INSTALL_DIR/etc/php.d \
     --with-fpm-user=$RUN_USER --with-fpm-group=$RUN_USER --enable-fpm \
@@ -47,60 +47,65 @@ ADD php-fpm.conf $PHP_INSTALL_DIR/etc/php-fpm.conf
 # install ImageMagick
 RUN wget -c --no-check-certificate http://www.imagemagick.org/download/ImageMagick.tar.gz && \
     tar xzf ImageMagick.tar.gz && \
-    cd ImageMagick* && \
+    pushd ImageMagick* && \
     ./configure --prefix=/usr/local/imagemagick --enable-shared --enable-static && \
     make && make install && \
-    cd .. && \
+    pushd .. && \
     wget -c --no-check-certificate http://pecl.php.net/get/imagick-$IMAGICK_PECL_VERSION.tgz && \
     tar xzf imagick-$IMAGICK_PECL_VERSION.tgz && \
-    cd imagick-$IMAGICK_PECL_VERSION && \
+    pushd imagick-$IMAGICK_PECL_VERSION && \
     export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --with-imagick=/usr/local/imagemagick && \
     make && make install && \
+    echo "extension=imagick.so" > $PHP_INSTALL_DIR/etc/php.d/ext-imagick.ini && \
     rm -rf /tmp/*
 
 # install php-memcache
 RUN wget -c --no-check-certificate http://pecl.php.net/get/memcache-$MEMCACHE_PECL_VERSION.tgz && \
     tar xzf memcache-$MEMCACHE_PECL_VERSION.tgz && \
-    cd memcache-$MEMCACHE_PECL_VERSION && \
+    pushd memcache-$MEMCACHE_PECL_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
+    echo "extension=memcache.so" > $PHP_INSTALL_DIR/etc/php.d/ext-memcache.ini && \
     rm -rf /tmp/*
 
 # install php-memcached
 RUN wget -c --no-check-certificate https://launchpad.net/libmemcached/1.0/$LIBMEMCACHED_VERSION/+download/libmemcached-$LIBMEMCACHED_VERSION.tar.gz && \
     tar xzf libmemcached-$LIBMEMCACHED_VERSION.tar.gz && \
-    cd libmemcached-$LIBMEMCACHED_VERSION && \
+    pushd libmemcached-$LIBMEMCACHED_VERSION && \
     sed -i "s@lthread -pthread -pthreads@lthread -lpthread -pthreads@" ./configure && \
     ./configure && \
     make && make install && \
-    cd .. && \
+    pushd .. && \
     wget -c --no-check-certificate http://pecl.php.net/get/memcached-$MEMCACHED_PECL_VERSION.tgz && \
     tar xzf memcached-$MEMCACHED_PECL_VERSION.tgz && \
-    cd memcached-$MEMCACHED_PECL_VERSION && \
+    pushd memcached-$MEMCACHED_PECL_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
+    echo -e "extension=memcached.so\nmemcached.use_sasl=1" > $PHP_INSTALL_DIR/etc/php.d/ext-memcached.ini && \
     rm -rf /tmp/*
 
 # install php-redis
 RUN wget -c --no-check-certificate http://pecl.php.net/get/redis-$REDIS_PECL_VERSION.tgz && \
     tar xzf redis-$REDIS_PECL_VERSION.tgz && \
-    cd redis-$REDIS_PECL_VERSION && \
+    pushd redis-$REDIS_PECL_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
+    echo "extension=redis.so" > $PHP_INSTALL_DIR/etc/php.d/ext-redis.ini && \
     rm -rf /tmp/*
 
 # install swoole
 RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/v$SWOOLE_VERSION-stable.tar.gz && \
     tar xzf v$SWOOLE_VERSION-stable.tar.gz && \
-    cd swoole-src-$SWOOLE_VERSION-stable && \
+    pushd swoole-src-$SWOOLE_VERSION-stable && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --enable-jemalloc && \
     make && make install && \
+    echo "extension=swoole.so" > $PHP_INSTALL_DIR/etc/php.d/ext-swoole.ini && \
     rm -rf /tmp/*
 
 # run install script
@@ -113,9 +118,6 @@ RUN chmod 777 install.sh && \
 RUN curl -sS https://getcomposer.org/installer | $PHP_INSTALL_DIR/bin/php && \
     mv composer.phar /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer
-
-# expose port
-EXPOSE 9000
 
 # Set the entrypoint script.
 ADD ./entrypoint.sh /entrypoint.sh

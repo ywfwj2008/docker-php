@@ -17,42 +17,6 @@ sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,c
 
 sed -i "s@extension_dir = \"ext\"@extension_dir = \"ext\"\nextension_dir = \"`$PHP_INSTALL_DIR/bin/php-config --extension-dir`\"@" $PHP_INSTALL_DIR/etc/php.ini
 
-# imagick
-if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/imagick.so" ];then
-    cat > $PHP_INSTALL_DIR/etc/php.d/ext-imagick.ini << EOF
-extension=imagick.so
-EOF
-fi
-
-# memcache
-if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/memcache.so" ];then
-    cat > $PHP_INSTALL_DIR/etc/php.d/ext-memcache.ini << EOF
-extension=memcache.so
-EOF
-fi
-
-# memcached
-if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/memcached.so" ];then
-    cat > $PHP_INSTALL_DIR/etc/php.d/ext-memcached.ini << EOF
-extension=memcached.so
-memcached.use_sasl=1
-EOF
-fi
-
-# redis
-if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/redis.so" ];then
-    cat > $PHP_INSTALL_DIR/etc/php.d/ext-redis.ini << EOF
-extension=redis.so
-EOF
-fi
-
-# swoole
-if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/swoole.so" ];then
-    cat > $PHP_INSTALL_DIR/etc/php.d/ext-swoole.ini << EOF
-extension=swoole.so
-EOF
-fi
-
 # install ZendGuardLoader
 wget -c http://mirrors.linuxeye.com/oneinstack/src/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz -P /tmp
 tar xzf /tmp/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
