@@ -18,9 +18,8 @@ sed -i 's@^post_max_size.*@post_max_size = 100M@' $PHP_INSTALL_DIR/etc/php.ini
 sed -i 's@^upload_max_filesize.*@upload_max_filesize = 50M@' $PHP_INSTALL_DIR/etc/php.ini
 sed -i 's@^max_execution_time.*@max_execution_time = 5@' $PHP_INSTALL_DIR/etc/php.ini
 sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server,popen@' $PHP_INSTALL_DIR/etc/php.ini
-[ -e /usr/sbin/sendmail ] && sed -i 's@^;sendmail_path.*@sendmail_path = /usr/sbin/sendmail -t -i@' $PHP_INSTALL_DIR/etc/php.ini
-
 sed -i "s@extension_dir = \"ext\"@extension_dir = \"ext\"\nextension_dir = \"`$PHP_INSTALL_DIR/bin/php-config --extension-dir`\"@" $PHP_INSTALL_DIR/etc/php.ini
+[ -e /usr/sbin/sendmail ] && sed -i 's@^;sendmail_path.*@sendmail_path = /usr/sbin/sendmail -t -i@' $PHP_INSTALL_DIR/etc/php.ini
 
 # zendopcache
 # opcache.max_accelerated_files's value can be in {223,463,983,1979,3907,7963,16229,32521,65407,130987}
@@ -37,28 +36,3 @@ opcache.fast_shutdown=1
 opcache.enable_cli=1
 ;opcache.optimization_level=0
 EOF
-
-# install ZendGuardLoader
-wget -c http://mirrors.linuxeye.com/oneinstack/src/zend-loader-php5.5-linux-x86_64.tar.gz -P /tmp
-tar xzf /tmp/zend-loader-php5.5-linux-x86_64.tar.gz
-cp /tmp/zend-loader-php5.5-linux-x86_64/ZendGuardLoader.so `$PHP_INSTALL_DIR/bin/php-config --extension-dir`
-if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ZendGuardLoader.so" ];then
-    cat > $PHP_INSTALL_DIR/etc/php.d/ext-ZendGuardLoader.ini << EOF
-[Zend Guard Loader]
-zend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ZendGuardLoader.so
-zend_loader.enable=1
-zend_loader.disable_licensing=0
-zend_loader.obfuscation_level_support=3
-EOF
-fi
-
-# install ioncube
-wget -c http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp
-tar xzf /tmp/ioncube_loaders_lin_x86-64.tar.gz
-cp /tmp/ioncube/ioncube_loader_lin_5.5.so `$PHP_INSTALL_DIR/bin/php-config --extension-dir`
-if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.5.so" ];then
-    cat > $PHP_INSTALL_DIR/etc/php.d/ext-0ioncube.ini << EOF
-[ionCube Loader]
-zend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.5.so
-EOF
-fi
