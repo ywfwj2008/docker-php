@@ -121,7 +121,7 @@ RUN wget -c http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x
     echo -e "[ionCube Loader]\nzend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.5.so" > $PHP_INSTALL_DIR/etc/php.d/ext-0ioncube.ini
 
 # run install script
-ADD ./install.sh /tmp/install.sh
+ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
 RUN chmod 777 install.sh && \
     bash install.sh && \
     rm -rf /tmp/*
