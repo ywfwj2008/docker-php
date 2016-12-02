@@ -23,6 +23,38 @@ sed -i "s@extension_dir = \"ext\"@extension_dir = \"ext\"\nextension_dir = \"`$P
 
 # zendopcache
 # opcache.max_accelerated_files's value can be in {223,463,983,1979,3907,7963,16229,32521,65407,130987}
-cat > $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini << EOF
-[opcache]\nzend_extension=opcache.so\nopcache.enable=1\nopcache.enable_cli=1\nopcache.memory_consumption=192\nopcache.interned_strings_buffer=8\nopcache.max_accelerated_files=7963\nopcache.max_wasted_percentage=5\nopcache.use_cwd=1\nopcache.validate_timestamps=1\nopcache.revalidate_freq=60\nopcache.save_comments=0\nopcache.fast_shutdown=1\nopcache.consistency_checks=0\n;opcache.optimization_level=0
+if [ -f "${phpExtensionDir}/opcache.so" ]; then
+    cat > ${PHP_INSTALL_DIR}/etc/php.d/ext-opcache.ini << EOF
+[opcache]
+zend_extension=${phpExtensionDir}/opcache.so
+opcache.enable=1
+opcache.memory_consumption=192
+opcache.interned_strings_buffer=8
+opcache.max_accelerated_files=7963
+opcache.revalidate_freq=60
+opcache.save_comments=0
+opcache.fast_shutdown=1
+opcache.enable_cli=1
+;opcache.optimization_level=0
 EOF
+
+else
+
+    cat > $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini << EOF
+[opcache]
+zend_extension=opcache.so
+opcache.enable=1
+opcache.enable_cli=1
+opcache.memory_consumption=192
+opcache.interned_strings_buffer=8
+opcache.max_accelerated_files=7963
+opcache.max_wasted_percentage=5
+opcache.use_cwd=1
+opcache.validate_timestamps=1
+opcache.revalidate_freq=60
+opcache.save_comments=0
+opcache.fast_shutdown=1
+opcache.consistency_checks=0
+;opcache.optimization_level=0
+EOF
+fi
