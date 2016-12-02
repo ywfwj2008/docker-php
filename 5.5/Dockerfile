@@ -106,6 +106,7 @@ RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/
     rm -rf /tmp/*
 
 # install ZendGuardLoader and ioncube
+ADD ${REMOTE_PATH}/ext-opcache.ini $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini
 RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
     wget -c http://mirrors.linuxeye.com/oneinstack/src/zend-loader-php5.5-linux-x86_64.tar.gz -P /tmp && \
     tar xzf /tmp/zend-loader-php5.5-linux-x86_64.tar.gz && \
@@ -114,7 +115,6 @@ RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
     tar xzf /tmp/ioncube_loaders_lin_x86-64.tar.gz && \
     /bin/cp /tmp/ioncube/ioncube_loader_lin_5.5.so ${phpExtensionDir}/ioncube_loader.so && \
     rm -rf /tmp/*
-ADD ${REMOTE_PATH}/ext-opcache.ini $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini
 
 # run install script
 ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
