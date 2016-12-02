@@ -119,7 +119,6 @@ RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
 ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
 RUN chmod 777 install.sh && \
     bash install.sh && \
-    source /etc/profile && \
     rm -rf /tmp/*
 
 # install composer
