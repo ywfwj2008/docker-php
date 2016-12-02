@@ -45,7 +45,7 @@ fi
 if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/opcache.so" ]; then
     cat > ${PHP_INSTALL_DIR}/etc/php.d/ext-opcache.ini << EOF
 [opcache]
-zend_extension=${phpExtensionDir}/opcache.so
+zend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/opcache.so
 opcache.enable=1
 opcache.memory_consumption=192
 opcache.interned_strings_buffer=8
