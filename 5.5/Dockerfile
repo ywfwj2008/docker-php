@@ -11,9 +11,6 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
     SWOOLE_VERSION=1.9.0 \
     REMOTE_PATH=https://github.com/ywfwj2008/docker-php/raw/master
 
-RUN apt-get update && apt-get upgrade -yqq && \
-    rm -rf /var/lib/apt/lists/*
-
 WORKDIR /tmp
 
 # install php
