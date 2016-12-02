@@ -81,7 +81,8 @@ RUN wget -c --no-check-certificate https://launchpad.net/libmemcached/1.0/$LIBME
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
-    echo -e "extension=memcached.so\nmemcached.use_sasl=1" > $PHP_INSTALL_DIR/etc/php.d/ext-memcached.ini && \
+    echo "extension=memcached.so" >> $PHP_INSTALL_DIR/etc/php.d/ext-memcached.ini && \
+    echo "memcached.use_sasl=1" >> $PHP_INSTALL_DIR/etc/php.d/ext-memcached.ini && \
     rm -rf /tmp/*
 
 # install php-redis
@@ -118,6 +119,7 @@ RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
 ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
 RUN chmod 777 install.sh && \
     bash install.sh && \
+    source /etc/profile && \
     rm -rf /tmp/*
 
 # install composer
