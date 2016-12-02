@@ -21,9 +21,28 @@ sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,c
 sed -i "s@extension_dir = \"ext\"@extension_dir = \"ext\"\nextension_dir = \"`$PHP_INSTALL_DIR/bin/php-config --extension-dir`\"@" $PHP_INSTALL_DIR/etc/php.ini
 [ -e /usr/sbin/sendmail ] && sed -i 's@^;sendmail_path.*@sendmail_path = /usr/sbin/sendmail -t -i@' $PHP_INSTALL_DIR/etc/php.ini
 
+# ZendGuardLoader
+if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ZendGuardLoader.so" ];then
+    cat > $PHP_INSTALL_DIR/etc/php.d/ext-ZendGuardLoader.ini << EOF
+[Zend Guard Loader]
+zend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ZendGuardLoader.so
+zend_loader.enable=1
+zend_loader.disable_licensing=0
+zend_loader.obfuscation_level_support=3
+EOF
+fi
+
+# ioncube
+if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader.so" ];then
+    cat > $PHP_INSTALL_DIR/etc/php.d/ext-0ioncube.ini << EOF
+[ionCube Loader]
+zend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader.so
+EOF
+fi
+
 # zendopcache
 # opcache.max_accelerated_files's value can be in {223,463,983,1979,3907,7963,16229,32521,65407,130987}
-if [ -f "${phpExtensionDir}/opcache.so" ]; then
+if [ -f "`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/opcache.so" ]; then
     cat > ${PHP_INSTALL_DIR}/etc/php.d/ext-opcache.ini << EOF
 [opcache]
 zend_extension=${phpExtensionDir}/opcache.so
