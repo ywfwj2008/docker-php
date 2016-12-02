@@ -35,10 +35,10 @@ RUN wget -c --no-check-certificate http://www.php.net/distributions/php-$PHP_VER
     make ZEND_EXTRA_LIBS='-liconv' && \
     make install && \
     mkdir -p $PHP_INSTALL_DIR/etc/php.d && \
+    phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
     /bin/cp php.ini-production $PHP_INSTALL_DIR/etc/php.ini && \
     /bin/cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && \
     chmod +x /etc/init.d/php-fpm && \
-    ln -s $PHP_INSTALL_DIR/bin/php /usr/local/bin/php && \
     rm -rf /tmp/*
 
 # add php-fpm.conf
@@ -111,13 +111,13 @@ RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/
 # install ZendGuardLoader and ioncube
 RUN wget -c http://mirrors.linuxeye.com/oneinstack/src/zend-loader-php5.5-linux-x86_64.tar.gz -P /tmp && \
     tar xzf /tmp/zend-loader-php5.5-linux-x86_64.tar.gz && \
-    cp /tmp/zend-loader-php5.5-linux-x86_64/ZendGuardLoader.so `$PHP_INSTALL_DIR/bin/php-config --extension-dir` && \
+    cp /tmp/zend-loader-php5.5-linux-x86_64/ZendGuardLoader.so ${phpExtensionDir} && \
     echo -e "[Zend Guard Loader]\nzend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ZendGuardLoader.so\nzend_loader.enable=1\nzend_loader.disable_licensing=0\nzend_loader.obfuscation_level_support=3\n" > $PHP_INSTALL_DIR/etc/php.d/ext-ZendGuardLoader.ini
     cd .. && \
     echo -e "[opcache]\nzend_extension=opcache.so\nopcache.enable=1\nopcache.enable_cli=1\nopcache.memory_consumption=192\nopcache.interned_strings_buffer=8\nopcache.max_accelerated_files=7963\nopcache.max_wasted_percentage=5\nopcache.use_cwd=1\nopcache.validate_timestamps=1\nopcache.revalidate_freq=60\nopcache.save_comments=0\nopcache.fast_shutdown=1\nopcache.consistency_checks=0\n;opcache.optimization_level=0" > $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini && \
     wget -c http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
     tar xzf /tmp/ioncube_loaders_lin_x86-64.tar.gz && \
-    cp /tmp/ioncube/ioncube_loader_lin_5.5.so `$PHP_INSTALL_DIR/bin/php-config --extension-dir` && \
+    cp /tmp/ioncube/ioncube_loader_lin_5.5.so ${phpExtensionDir} && \
     echo -e "[ionCube Loader]\nzend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.5.so" > $PHP_INSTALL_DIR/etc/php.d/ext-0ioncube.ini
 
 # run install script
