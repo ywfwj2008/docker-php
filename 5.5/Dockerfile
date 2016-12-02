@@ -115,7 +115,7 @@ RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
     echo -e "[Zend Guard Loader]\nzend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ZendGuardLoader.so\nzend_loader.enable=1\nzend_loader.disable_licensing=0\nzend_loader.obfuscation_level_support=3\n" > $PHP_INSTALL_DIR/etc/php.d/ext-ZendGuardLoader.ini
     cd .. && \
     echo -e "[opcache]\nzend_extension=opcache.so\nopcache.enable=1\nopcache.enable_cli=1\nopcache.memory_consumption=192\nopcache.interned_strings_buffer=8\nopcache.max_accelerated_files=7963\nopcache.max_wasted_percentage=5\nopcache.use_cwd=1\nopcache.validate_timestamps=1\nopcache.revalidate_freq=60\nopcache.save_comments=0\nopcache.fast_shutdown=1\nopcache.consistency_checks=0\n;opcache.optimization_level=0" > $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini && \
-    wget -c http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
+    wget -c http://downloads2.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
     tar xzf /tmp/ioncube_loaders_lin_x86-64.tar.gz && \
     /bin/cp /tmp/ioncube/ioncube_loader_lin_5.5.so ${phpExtensionDir} && \
     echo -e "[ionCube Loader]\nzend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.5.so" > $PHP_INSTALL_DIR/etc/php.d/ext-0ioncube.ini
