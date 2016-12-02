@@ -111,12 +111,12 @@ RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/
 # install ZendGuardLoader and ioncube
 RUN wget -c http://mirrors.linuxeye.com/oneinstack/src/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz -P /tmp && \
     tar xzf /tmp/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz && \
-    cp /tmp/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64/php-5.4.x/ZendGuardLoader.so ${phpExtensionDir} && \
+    /bin/cp /tmp/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64/php-5.4.x/ZendGuardLoader.so ${phpExtensionDir} && \
     echo -e "[Zend Guard Loader]\nzend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ZendGuardLoader.so\nzend_loader.enable=1\nzend_loader.disable_licensing=0\nzend_loader.obfuscation_level_support=3\n" > $PHP_INSTALL_DIR/etc/php.d/ext-ZendGuardLoader.ini
     cd .. && \
     wget -c http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
     tar xzf /tmp/ioncube_loaders_lin_x86-64.tar.gz && \
-    cp /tmp/ioncube/ioncube_loader_lin_5.4.so ${phpExtensionDir} && \
+    /bin/cp /tmp/ioncube/ioncube_loader_lin_5.4.so ${phpExtensionDir} && \
     echo -e "[ionCube Loader]\nzend_extension=`$PHP_INSTALL_DIR/bin/php-config --extension-dir`/ioncube_loader_lin_5.4.so" > $PHP_INSTALL_DIR/etc/php.d/ext-0ioncube.ini
 
 # run install script
