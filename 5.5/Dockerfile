@@ -20,15 +20,15 @@ RUN wget -c --no-check-certificate http://www.php.net/distributions/php-$PHP_VER
     patch -d php-$PHP_VERSION -p0 < fpm-race-condition.patch && \
     cd php-$PHP_VERSION && \
     ./configure --prefix=$PHP_INSTALL_DIR --with-config-file-path=$PHP_INSTALL_DIR/etc \
-    --with-config-file-scan-dir=$PHP_INSTALL_DIR/etc/php.d \
-    --with-fpm-user=$RUN_USER --with-fpm-group=$RUN_USER --enable-fpm --enable-opcache \
-    --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd \
-    --with-iconv-dir=/usr/local --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib \
-    --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-exif \
-    --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local --enable-mbregex \
-    --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl \
-    --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-ftp --enable-intl --with-xsl \
-    --with-gettext --enable-zip --enable-soap --disable-ipv6 --disable-debug && \
+        --with-config-file-scan-dir=$PHP_INSTALL_DIR/etc/php.d \
+        --with-fpm-user=$RUN_USER --with-fpm-group=$RUN_USER --enable-fpm --enable-opcache \
+        --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd \
+        --with-iconv-dir=/usr/local --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib \
+        --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-exif \
+        --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local --enable-mbregex \
+        --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl \
+        --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-ftp --enable-intl --with-xsl \
+        --with-gettext --enable-zip --enable-soap --disable-ipv6 --disable-debug && \
     make ZEND_EXTRA_LIBS='-liconv' && \
     make install && \
     mkdir -p $PHP_INSTALL_DIR/etc/php.d && \
