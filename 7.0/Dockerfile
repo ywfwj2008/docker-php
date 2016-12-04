@@ -5,7 +5,7 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
     PHP_VERSION=7.0.13 \
     IMAGICK_PECL_VERSION=3.4.3RC1 \
     LIBMEMCACHED_VERSION=1.0.18 \
-    REDIS_PECL_VERSION=2.2.8 \
+    REDIS_PECL_VERSION=3.0.0 \
     SWOOLE_VERSION=1.9.0 \
     REMOTE_PATH=https://github.com/ywfwj2008/docker-php/raw/master
 
@@ -103,7 +103,7 @@ RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/
     echo "extension=swoole.so" > $PHP_INSTALL_DIR/etc/php.d/ext-swoole.ini && \
     rm -rf /tmp/*
 
-# install ZendGuardLoader and ioncube
+# install ioncube
 ADD ${REMOTE_PATH}/ext-opcache.ini $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini
 RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
     wget -c http://downloads2.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
