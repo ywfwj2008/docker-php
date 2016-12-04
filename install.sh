@@ -1,10 +1,65 @@
 #!/bin/bash
 
-PHP_INSTALL_DIR=/usr/local/php
 phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir)
 
 [ -z "`grep ^'export PATH=' /etc/profile`" ] && echo "export PATH=$PHP_INSTALL_DIR/bin:\$PATH" >> /etc/profile
 [ -n "`grep ^'export PATH=' /etc/profile`" -a -z "`grep $PHP_INSTALL_DIR /etc/profile`" ] && sed -i "s@^export PATH=\(.*\)@export PATH=$PHP_INSTALL_DIR/bin:\1@" /etc/profile
+
+cat > $PHP_INSTALL_DIR/etc/php-fpm.conf <<EOF
+;;;;;;;;;;;;;;;;;;;;;
+; FPM Configuration ;
+;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;
+; Global Options ;
+;;;;;;;;;;;;;;;;;;
+
+[global]
+pid = run/php-fpm.pid
+error_log = log/php-fpm.log
+log_level = warning
+
+emergency_restart_threshold = 30
+emergency_restart_interval = 60s
+process_control_timeout = 5s
+daemonize = yes
+
+;;;;;;;;;;;;;;;;;;;;
+; Pool Definitions ;
+;;;;;;;;;;;;;;;;;;;;
+
+[$RUN_USER]
+listen = /dev/shm/php-cgi.sock
+listen.backlog = -1
+listen.allowed_clients = 127.0.0.1
+listen.owner = $RUN_USER
+listen.group = $RUN_USER
+listen.mode = 0666
+user = $RUN_USER
+group = $RUN_USER
+
+pm = dynamic
+pm.max_children = 12
+pm.start_servers = 8
+pm.min_spare_servers = 6
+pm.max_spare_servers = 12
+pm.max_requests = 2048
+pm.process_idle_timeout = 10s
+request_terminate_timeout = 120
+request_slowlog_timeout = 0
+
+pm.status_path = /php-fpm_status
+slowlog = log/slow.log
+rlimit_files = 51200
+rlimit_core = 0
+
+catch_workers_output = yes
+;env[HOSTNAME] = \$HOSTNAME
+env[PATH] = /usr/local/bin:/usr/bin:/bin
+env[TMP] = /tmp
+env[TMPDIR] = /tmp
+env[TEMP] = /tmp
+EOF
 
 # optimize php.ini
 sed -i "s@^memory_limit.*@memory_limit = 192M@" $PHP_INSTALL_DIR/etc/php.ini

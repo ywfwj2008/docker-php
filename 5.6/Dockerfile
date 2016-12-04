@@ -35,9 +35,6 @@ RUN wget -c --no-check-certificate http://www.php.net/distributions/php-$PHP_VER
     chmod +x /etc/init.d/php-fpm && \
     rm -rf /tmp/*
 
-# add php-fpm.conf
-ADD $REMOTE_PATH/php-fpm.conf $PHP_INSTALL_DIR/etc/php-fpm.conf
-
 # install ImageMagick
 RUN wget -c --no-check-certificate http://www.imagemagick.org/download/ImageMagick.tar.gz && \
     tar xzf ImageMagick.tar.gz && \
