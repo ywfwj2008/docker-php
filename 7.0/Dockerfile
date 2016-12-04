@@ -17,7 +17,7 @@ WORKDIR /tmp
 RUN wget -c --no-check-certificate http://www.php.net/distributions/php-$PHP_VERSION.tar.gz && \
     tar xzf php-$PHP_VERSION.tar.gz && \
     cd php-$PHP_VERSION && \
-    ./buildconf
+    ./buildconf --force && \
     ./configure --prefix=$PHP_INSTALL_DIR --with-config-file-path=$PHP_INSTALL_DIR/etc \
         --with-config-file-scan-dir=$PHP_INSTALL_DIR/etc/php.d \
         --with-fpm-user=$RUN_USER --with-fpm-group=$RUN_USER --enable-fpm \
