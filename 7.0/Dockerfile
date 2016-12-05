@@ -106,7 +106,7 @@ RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/
 # install ioncube
 ADD ${REMOTE_PATH}/ext-opcache.ini $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini
 RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
-    wget -c http://downloads2.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
+    wget -c http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
     tar xzf /tmp/ioncube_loaders_lin_x86-64.tar.gz && \
     /bin/cp /tmp/ioncube/ioncube_loader_lin_7.0.so ${phpExtensionDir}/ioncube_loader.so && \
     rm -rf /tmp/*

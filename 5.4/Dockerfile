@@ -107,7 +107,7 @@ RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
     wget -c http://mirrors.linuxeye.com/oneinstack/src/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz -P /tmp && \
     tar xzf /tmp/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz && \
     /bin/cp /tmp/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64/php-5.4.x/ZendGuardLoader.so ${phpExtensionDir} && \
-    wget -c http://downloads2.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
+    wget -c http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
     tar xzf /tmp/ioncube_loaders_lin_x86-64.tar.gz && \
     /bin/cp /tmp/ioncube/ioncube_loader_lin_5.4.so ${phpExtensionDir}/ioncube_loader.so && \
     rm -rf /tmp/*
