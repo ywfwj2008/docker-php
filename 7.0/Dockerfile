@@ -2,7 +2,7 @@ FROM ywfwj2008/dependent:latest
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV PHP_INSTALL_DIR=/usr/local/php \
-    PHP_VERSION=7.0.13 \
+    PHP_VERSION=7.0.14 \
     IMAGICK_PECL_VERSION=3.4.3RC1 \
     LIBMEMCACHED_VERSION=1.0.18 \
     REDIS_PECL_VERSION=3.0.0 \
