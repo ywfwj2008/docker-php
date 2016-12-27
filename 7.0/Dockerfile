@@ -6,7 +6,7 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
     IMAGICK_PECL_VERSION=3.4.3RC1 \
     LIBMEMCACHED_VERSION=1.0.18 \
     REDIS_PECL_VERSION=3.1.0 \
-    SWOOLE_VERSION=1.9.1 \
+    SWOOLE_VERSION=1.9.3 \
     REMOTE_PATH=https://github.com/ywfwj2008/docker-php/raw/master
 
 WORKDIR /tmp
