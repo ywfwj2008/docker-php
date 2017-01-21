@@ -8,6 +8,7 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
     LIBMEMCACHED_VERSION=1.0.18 \
     MEMCACHED_PECL_VERSION=2.2.0 \
     REDIS_PECL_VERSION=2.2.8 \
+    EVENT_VERSION=2.3.0RC1 \
     SWOOLE_VERSION=2.0.5 \
     REMOTE_PATH=https://github.com/ywfwj2008/docker-php/raw/master
 
@@ -90,6 +91,16 @@ RUN wget -c --no-check-certificate http://pecl.php.net/get/redis-$REDIS_PECL_VER
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
     echo "extension=redis.so" > $PHP_INSTALL_DIR/etc/php.d/ext-redis.ini && \
+    rm -rf /tmp/*
+
+# install event
+RUN wget -c --no-check-certificate https://bitbucket.org/osmanov/pecl-event/get/$EVENT_VERSION.tar.gz && \
+    tar xzf $EVENT_VERSION.tar.gz && \
+    cd osmanov-pecl-event-* && \
+    $PHP_INSTALL_DIR/bin/phpize && \
+    ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --with-event-openssl=no --enable-event-sockets --with-event-extra && \
+    make && make install && \
+    echo "extension=event.so" > $PHP_INSTALL_DIR/etc/php.d/ext-event.ini && \
     rm -rf /tmp/*
 
 # install swoole
