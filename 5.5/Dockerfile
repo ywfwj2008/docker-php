@@ -93,9 +93,9 @@ RUN wget -c --no-check-certificate http://pecl.php.net/get/redis-$REDIS_PECL_VER
     rm -rf /tmp/*
 
 # install swoole
-RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/v$SWOOLE_VERSION-stable.tar.gz && \
-    tar xzf v$SWOOLE_VERSION-stable.tar.gz && \
-    cd swoole-src-$SWOOLE_VERSION-stable && \
+RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/v$SWOOLE_VERSION.tar.gz && \
+    tar xzf v$SWOOLE_VERSION.tar.gz && \
+    cd swoole-src-$SWOOLE_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --enable-jemalloc && \
     make && make install && \
