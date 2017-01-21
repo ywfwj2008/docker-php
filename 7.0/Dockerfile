@@ -2,11 +2,11 @@ FROM ywfwj2008/dependent:latest
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV PHP_INSTALL_DIR=/usr/local/php \
-    PHP_VERSION=7.0.14 \
+    PHP_VERSION=7.0.15 \
     IMAGICK_PECL_VERSION=3.4.3RC1 \
     LIBMEMCACHED_VERSION=1.0.18 \
     REDIS_PECL_VERSION=3.1.0 \
-    SWOOLE_VERSION=1.9.3 \
+    SWOOLE_VERSION=1.9.5 \
     REMOTE_PATH=https://github.com/ywfwj2008/docker-php/raw/master
 
 WORKDIR /tmp
