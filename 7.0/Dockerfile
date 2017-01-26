@@ -5,7 +5,6 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
     PHP_VERSION=7.0.15 \
     IMAGICK_PECL_VERSION=3.4.3RC2 \
     LIBMEMCACHED_VERSION=1.0.18 \
-    REDIS_PECL_VERSION=3.1.0 \
     EVENT_VERSION=2.3.0RC1 \
     SWOOLE_VERSION=2.0.5 \
     REMOTE_PATH=https://github.com/ywfwj2008/docker-php/raw/master
@@ -85,12 +84,7 @@ RUN wget -c --no-check-certificate https://launchpad.net/libmemcached/1.0/$LIBME
     rm -rf /tmp/*
 
 # install php-redis
-RUN wget -c --no-check-certificate http://pecl.php.net/get/redis-$REDIS_PECL_VERSION.tgz && \
-    tar xzf redis-$REDIS_PECL_VERSION.tgz && \
-    cd redis-$REDIS_PECL_VERSION && \
-    $PHP_INSTALL_DIR/bin/phpize && \
-    ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
-    make && make install && \
+RUN $PHP_INSTALL_DIR/bin/pecl install redis && \
     echo "extension=redis.so" > $PHP_INSTALL_DIR/etc/php.d/ext-redis.ini && \
     rm -rf /tmp/*
 
