@@ -84,7 +84,7 @@ RUN wget -c --no-check-certificate https://launchpad.net/libmemcached/1.0/$LIBME
     rm -rf /tmp/*
 
 # install php-redis
-RUN $PHP_INSTALL_DIR/bin/pecl install redis-3.1.1RC2 && \
+RUN $PHP_INSTALL_DIR/bin/pecl install redis && \
     echo "extension=redis.so" > $PHP_INSTALL_DIR/etc/php.d/ext-redis.ini && \
     rm -rf /tmp/*
 
