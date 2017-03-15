@@ -74,9 +74,9 @@ RUN wget -c --no-check-certificate https://launchpad.net/libmemcached/1.0/$LIBME
     ./configure && \
     make && make install && \
     cd .. && \
-    wget -c --no-check-certificate http://mirrors.linuxeye.com/oneinstack/src/php-memcached-php7.tgz && \
-    tar xzf php-memcached-php7.tgz && \
-    cd php-memcached-php7 && \
+    wget -c --no-check-certificate http://pecl.php.net/get/memcached-$MEMCACHED_PECL_VERSION.tgz && \
+    tar xzf memcached-$MEMCACHED_PECL_VERSION.tgz && \
+    cd memcached-$MEMCACHED_PECL_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config && \
     make && make install && \
