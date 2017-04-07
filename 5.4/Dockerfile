@@ -7,7 +7,7 @@ ENV PHP_INSTALL_DIR=/usr/local/php \
     MEMCACHE_PECL_VERSION=3.0.8 \
     LIBMEMCACHED_VERSION=1.0.18 \
     MEMCACHED_PECL_VERSION=2.2.0 \
-    EVENT_VERSION=2.3.0RC1 \
+    EVENT_VERSION=2.3.0 \
     SWOOLE_VERSION=1.9.8 \
     REMOTE_PATH=https://github.com/ywfwj2008/docker-php/raw/master
 
