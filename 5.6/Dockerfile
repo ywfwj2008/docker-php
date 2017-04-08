@@ -86,9 +86,9 @@ RUN $PHP_INSTALL_DIR/bin/pecl install redis && \
     rm -rf /tmp/*
 
 # install event
-RUN wget -c --no-check-certificate https://bitbucket.org/osmanov/pecl-event/get/$EVENT_VERSION.tar.gz && \
-    tar xzf $EVENT_VERSION.tar.gz && \
-    cd osmanov-pecl-event-* && \
+RUN wget -c --no-check-certificate http://pecl.php.net/get/event-$EVENT_VERSION.tgz && \
+    tar xzf event-$EVENT_VERSION.tgz && \
+    cd event-$EVENT_VERSION && \
     $PHP_INSTALL_DIR/bin/phpize && \
     ./configure --with-php-config=$PHP_INSTALL_DIR/bin/php-config --with-event-openssl=no --enable-event-sockets --with-event-extra && \
     make && make install && \
