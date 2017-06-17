@@ -95,3 +95,11 @@ if [ -f "${phpExtensionDir}/ioncube_loader.so" ];then
 zend_extension=${phpExtensionDir}/ioncube_loader.so
 EOF
 fi
+
+# sg11
+if [ -f "${phpExtensionDir}/ixed.lin" ];then
+    cat > $PHP_INSTALL_DIR/etc/php.d/ext-SourceGuardian.ini << EOF
+[SourceGuardian Loader]
+zend_extension=${phpExtensionDir}/ixed.lin
+EOF
+fi

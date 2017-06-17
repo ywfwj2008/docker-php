@@ -114,6 +114,9 @@ RUN phpExtensionDir=$(${PHP_INSTALL_DIR}/bin/php-config --extension-dir) && \
     wget -c http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -P /tmp && \
     tar xzf /tmp/ioncube_loaders_lin_x86-64.tar.gz && \
     /bin/cp /tmp/ioncube/ioncube_loader_lin_5.6.so ${phpExtensionDir}/ioncube_loader.so && \
+    wget -c https://github.com/ywfwj2008/docker-php/raw/master/loaders.linux-x86_64.tar.gz -P /tmp && \
+    tar xzf loaders.linux-x86_64.tar.gz && \
+    /bin/cp /tmp/loaders.linux-x86_64/ixed.5.6.lin ${phpExtensionDir}/ixed.lin && \
     rm -rf /tmp/*
 
 # run install script
