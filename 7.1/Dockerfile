@@ -113,7 +113,7 @@ RUN wget -c --no-check-certificate https://github.com/swoole/swoole-src/archive/
 ADD ${REMOTE_PATH}/ext-opcache.ini $PHP_INSTALL_DIR/etc/php.d/ext-opcache.ini
 RUN wget -c https://github.com/ywfwj2008/docker-php/raw/master/loaders.linux-x86_64.tar.gz -P /tmp && \
     tar xzf /tmp/loaders.linux-x86_64.tar.gz && \
-    /bin/cp /tmp/ixed.5.6.lin ${phpExtensionDir}/ixed.lin && \
+    /bin/cp /tmp/ixed.7.1.lin ${phpExtensionDir}/ixed.lin && \
     rm -rf /tmp/*
 
 # run install script
