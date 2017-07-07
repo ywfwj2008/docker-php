@@ -2,7 +2,7 @@ FROM ywfwj2008/dependent:latest
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV PHP_INSTALL_DIR=/usr/local/php \
-    PHP_VERSION=5.6.30 \
+    PHP_VERSION=5.6.31 \
     IMAGICK_PECL_VERSION=3.4.3 \
     MEMCACHE_PECL_VERSION=3.0.8 \
     LIBMEMCACHED_VERSION=1.0.18 \
