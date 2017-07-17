@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+PATH=/usr/local/php/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH
 
 # reset memory
 PHP_INSTALL_DIR=/usr/local/php
